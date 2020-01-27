@@ -1,0 +1,42 @@
+<div class="container my-4" id="pokedex">
+
+    <div class="row">
+        <form class="col-md-4 form-inline" method="get">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
+            <button class="btn btn-outline-primary sm-0" type="submit">Go</button>
+        </form>
+    </div>
+
+    <?php if ( $errorMsg !== null ): ?>
+        <div class="alert alert-danger mt-4" role="alert">
+            <?= $errorMsg ?>
+        </div>
+    <?php endif; ?>
+
+    <div class="row row-cols-6 mt-4 zoom">
+        <?php if ( isset($pokemons) ): ?>
+            <?php foreach($pokemons as $poke): ?>
+                <?php $id = array_pop(explode('/', substr($poke->url, 0, -1))); ?>
+                <div class="col mb-4">
+                    <a href="<?= $this->url('pokemon', ['action' => 'detail', 'id' => $id]) ?>"><div class="card" style="width: 10rem;">
+                        <img src="https://pokeres.bastionbot.org/images/pokemon/<?= $id ?>.png" class="card-img-top p-2" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"><?= $this->escapeHtml(ucfirst($poke->name)) ?></h5>
+                        </div>
+                    </div></a>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+
+        <?php if ( isset($pokemon) ): ?>
+            <div class="col mb-4">
+                <a href="<?= $this->url('pokemon', ['action' => 'detail', 'id' => $pokemon->id]) ?>"><div class="card" style="width: 14rem;">
+                    <img src="https://pokeres.bastionbot.org/images/pokemon/<?= $pokemon->id ?>.png" class="card-img-top p-2" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"><?= $this->escapeHtml(ucfirst($pokemon->name)) ?></h5>
+                    </div>
+                </div></a>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>

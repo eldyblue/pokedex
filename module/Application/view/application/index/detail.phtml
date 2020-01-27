@@ -1,0 +1,39 @@
+<div class="container my-4">
+    <?php if ( $errorMsg !== null ): ?>
+        <div class="alert alert-danger mt-4" role="alert">
+            <?= $errorMsg ?>
+        </div>
+    <?php endif; ?>
+
+
+    <div class="row">
+        <a class="col-md-4" href="<?= $this->url('pokemon') ?>"><button class="btn btn-outline-primary" type="submit">Back</button></a>
+    </div>
+
+    <?php if ( $pokemon !== null ): ?>
+    <div class="card text-center my-4">
+        <div class="card-body">
+            <h1 class="card-title">Name : <?= $this->escapeHtml(ucfirst($pokemon->name)) ?></h1>
+            <h3 class="card-subtitle">ID : <?= $pokemon->id !== 69 ? $pokemon->id : $pokemon->id ." 😳" ?></h3>
+            <img class="card-image my-4" src="https://pokeres.bastionbot.org/images/pokemon/<?= $pokemon->id ?>.png" alt="" width="300px">
+            <ul class="list-group">
+                <h4 class="card-subtitle my-4">Types:</h4>
+            <?php foreach($pokemon->types as $type): ?>
+                <li class="list-group-item"><?= $this->escapeHtml(ucfirst($type->type->name)) ?></li>
+            <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row justify-content-between">
+        <?php if ($pokemon->id > 1): ?>
+            <a class="col-4" href="<?= $this->url('pokemon', ['action' => 'detail', 'id' => $pokemon->id - 1]) ?>"><button class="btn btn-outline-primary" type="submit">Previous</button></a>
+        <?php endif; ?>
+
+        <?php if ($pokemon->id < 151): ?>
+            <a class="col-auto" href="<?= $this->url('pokemon', ['action' => 'detail', 'id' => $pokemon->id + 1]) ?>"><button class="btn btn-outline-primary" type="submit">Next</button></a>
+        <?php endif; ?>
+    </div>
+
+    <?php endif; ?>
+</div>
